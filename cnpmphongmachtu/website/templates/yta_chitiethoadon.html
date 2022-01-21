@@ -1,0 +1,139 @@
+{% extends "common/yta/base.html" %}
+{% block title %} Bác Sĩ | Chi tiết hoá đơn {% endblock %}
+{% block header %}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Table</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Chi tiết hoá đơn</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block contents %}
+<div class="container-fluid mt--6">
+    <div class="col">
+        <div class="col-xl-2 order-xl-2"></div>
+        <div class="col-xl-10 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Thông tin hoá đơn</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="#">
+                        <h6 class="heading-small text-muted mb-4">Thông tin chung</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Mã Hoá Đơn</label>
+                                        <input type="text" name="mahd" value="{{ dsthongtin.mahd }}" readonly="readonly"
+                                            id="disabled" class="form-control" placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Tên Bệnh Nhân</label>
+                                        <input type="text" name="hoten" value="{{ dsthongtin.hoten }}"
+                                            readonly="readonly" id="disabled" class="form-control"
+                                            placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Ngày thanh toán</label>
+                                        <input type="text" name="ngayban" value="{{ dsthongtin.ngayban }}"
+                                            readonly="readonly" id="disabled" class="form-control"
+                                            placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Tiền khám</label>
+                                        <input type="text" name="tienkham" value="{{ dsthongtin.tienkham }}"
+                                            readonly="readonly" id="disabled" class="form-control"
+                                            placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Tiền thuốc</label>
+                                        <input type="text" name="tienthuoc" value="{{ dsthongtin.tienthuoc }}"
+                                            readonly="readonly" id="disabled" class="form-control"
+                                            placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Tổng thu</label>
+                                        <input type="text" name="tongthu" value="{{ dsthongtin.tongthu }}"
+                                            readonly="readonly" id="disabled" class="form-control"
+                                            placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-10 order-xl-1">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Chi tiết toa thuốc</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="tenthuoc">Tên Thuốc</th>
+                                <th scope="col" class="sort" data-sort="soluong">Số lượng</th>
+                                <th scope="col" class="sort" data-sort="cachdung">Đơn Vị</th>
+                                <th scope="col" class="sort" data-sort="dongia">Đơn Giá</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% if dschitiet != none %}
+                            {% for p in dschitiet %}
+                            <tr>
+                                <td class="budget">{{p[0]}}</td>
+                                <td class="budget">{{p[1]}}</td>
+                                <td class="budget">{{p[2]}}</td>
+                                <td class="budget">{{p[3]}}</td>
+                            </tr>
+                            {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-4">
+                <div class="float-right">
+                    <a href="{{url_for('yta.yta_hoadon')}}" class="btn btn-dark">Trở về</a>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

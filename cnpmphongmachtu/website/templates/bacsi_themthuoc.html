@@ -1,0 +1,131 @@
+{% extends "common/bacsi/base.html" %}
+{% block title %} Bác Sĩ | Kê toa thuốc {% endblock %}
+{% block contents %}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Table</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Kê toa thuốc</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="col">
+        <div class="col-xl-2 order-xl-2"></div>
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Danh sách thuốc kê cho bệnh nhân</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="tenthuoc">Tên Thuốc</th>
+                                <th scope="col" class="sort" data-sort="soluong">Số lượng</th>
+                                <th scope="col" class="sort" data-sort="cachdung">Cách dùng</th>
+                                <th scope="col" class="sort" data-sort="dongia">Đơn Giá</th>
+                                <th scope="col" class="sort" data-sort="dongia">Xoá</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for p in dschitiet %}
+                            <tr>
+                                <td class="budget">{{p[0]}}</td>
+                                <td class="budget">{{p[1]}}</td>
+                                <td class="budget">{{p[2]}}</td>
+                                <td class="budget">{{p[3]}}</td>
+                                <td class="budget"><a
+                                        href="{{url_for('bacsi.bacsi_xoachitietthuoc',matoa=p[4],mathuoc=p[5])}}"
+                                        class="btn btn-danger">Xoá</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-12 order-xl-1">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h3 class="mb-0">Chọn thuốc</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="{{url_for('bacsi.bacsi_them_thuocpk')}}">
+                        <h6 class="heading-small text-muted mb-4">Thông tin thuốc</h6>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Mã toa</label>
+                                        <input type="text" name="matoa" value="{{ matoa }}" readonly="readonly"
+                                            id="disabled" class="form-control" placeholder="Chưa lấy được mã toa" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="tenthuoc">Thuốc</label>
+                                        <select name="mathuoc" id="tenthuoc" class="form-control">
+                                            {% for p,q in dsthuoc %}
+                                            <option value="{{p.mathuoc}}">{{p.tenthuoc}} - {{q.tendonvi}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class=" col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-username">Ngày kê</label>
+                                        <input type="text" name="ngayke" value="{{ ngayke }}" readonly="readonly"
+                                            id="input-username" class="form-control" placeholder="Chưa lấy được ngày" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="input-first-name">Số lượng</label>
+                                        <input type="number" name="soluong" id="input-first-name" class="form-control"
+                                            min=1 required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-lg-4">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="float-left">
+                                        <input type="submit" name="themthuoc" class="btn btn-primary"
+                                            value="Thêm thuốc">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4"></div>
+                                <div class="col-lg-4">
+                                    <div class="float-right">
+                                        <a href="{{url_for('bacsi.bacsi_danhsachkham')}}" class="btn btn-primary">Thêm
+                                            xong</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

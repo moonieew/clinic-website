@@ -1,0 +1,17 @@
+{% if current_user.is_authenticated and current_user.ma_quyen == 1 %}
+    {% extends "/admin/master.html" %} 
+    {% block body %}
+        <h1 class="text-center">BẠN ĐANG Ở TRANG ADMIN</h1>
+        <h2 class="text-danger">LƯU Ý: MỌI CHỈNH SỬA CỦA BẠN Ở ĐÂY SẼ ẢNH HƯỞNG ĐẾN HỆ THỐNG</h2>
+        <h2 class="text-danger">VUI LÒNG THAO TÁC CẨN THẬN</h2>
+    {% endblock %}
+{% else %}
+    {% include 'login.html' %} 
+{% endif %}
+
+
+
+
+
+
+

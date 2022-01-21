@@ -1,0 +1,106 @@
+{% extends "common/yta/base.html" %}
+{% block title %} Y Tá | Báo Cáo {% endblock %}
+{% block header %}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Table</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Doanh thu</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block contents %}
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Báo cáo doanh thu</h3>
+                </div>
+                <form action="{{url_for('yta.yta_baocao')}}" method="post">
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col">
+                            <label for="start">Ngày đầu:</label>
+                            <input type="date" id="start" name="ngaydau" value="{{fdate}}" min="2018-01-01"
+                                max="2022-12-31">
+                        </div>
+                        <div class="col">
+                            <label for="end">Ngày cuối:</label>
+                            <input type="date" id="end" name="ngaycuoi" value="{{ldate}}" min="2018-01-01"
+                                max="2022-12-31">
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn btn-dark btn-sm" value="Tìm kiếm">
+                        </div>
+                    </div>
+                </form>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="mads">Ngày Bán</th>
+                                <th scope="col" class="sort" data-sort="ngaykham">Số Bệnh Nhân</th>
+                                <th scope="col" class="sort" data-sort="hoten">Doanh Thu</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for p in danhsach.items %}
+                            <tr>
+                                <td class="budget">{{p.ngayban}}</td>
+                                <td class="budget">{{p.tong_bn}}</td>
+                                <td class="budget">{{p.doanh_thu}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                {% if danhsach != 0 %}
+                <div class="card-footer py-4">
+                    <nav aria-label="static.">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item {% if not danhsach.has_prev %} disabled {% endif %}">
+                                <a class="page-link" href="{{url_for('yta.yta_baocao', page = danhsach.prev_num)}}">
+                                    <i class="fas fa-angle-left"></i>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% for page_number in
+                            danhsach.iter_pages(left_edge=1,right_edge=1,left_current=2,right_current=2) %}
+                            {% if page_number %}
+                            <li class="page-item {% if page_number==danhsach.page %} active {% endif %}">
+                                <a class="page-link"
+                                    href="{{url_for('yta.yta_baocao', page = page_number)}}">{{page_number}}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <li class="page-item {% if not danhsach.has_next %} disabled {% endif %}">
+                                <a class="page-link" href="{{url_for('yta.yta_baocao', page = danhsach.next_num)}}">
+                                    <i class="fas fa-angle-right"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Dark table -->
+</div>
+{% endblock %}

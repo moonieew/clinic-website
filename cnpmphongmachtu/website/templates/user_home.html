@@ -1,0 +1,123 @@
+{% extends "common/page/base.html" %}
+{% block title %} Người dùng | Nhà {% endblock %} {% block contents %}
+<p>trang home không cần body</p>
+<!-- ======= Contact Section ======= -->
+<section id="contact" class="contact">
+    <div class="container">
+        <div class="section-title">
+            <h2>Liên hệ</h2>
+            <p>
+                Phòng khám đa khoa HCMUTE với nhiều chuyên khoa về nội, Ngoại Khoa, Nhãn Khoa, Nha Khoa, Tai Mũi Họng,
+                Nhi Khoa,
+                Sản Phụ Khoa, Cơ Xương Khớp, Da Liễu… cung cấp chăm sóc y tế toàn diện dựa trên nỗ lực của toàn bộ tập
+                thể y
+                bác sĩ. Tiên phong trong lĩnh vực chăm sóc y tế, chúng tôi chào đón tất cả các bệnh nhân đến từ khắp nơi
+                .
+            </p>
+        </div>
+        <div class="section-title">
+            <h2>Đặt lịch khám tại đây</h2>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="info-box">
+                                <i class="bx bx-map"></i>
+                                <h3>Địa chỉ của chúng tôi</h3>
+                                <p>1 Võ Văn Ngân, Phường Linh Chiểu, Quận Thủ Đức, TPHCM</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box mt-4">
+                                <i class="bx bx-envelope"></i>
+                                <h3>Email</h3>
+                                <p>hcmute@gmail.com<br />hcmute1@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box mt-4">
+                                <i class="bx bx-phone-call"></i>
+                                <h3>Gọi cho chúng tôi</h3>
+                                <p>0333333333<br />0999999999</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="info-box mt-6">
+                        {% with massages = get_flashed_messages(with_categories=True) %}
+                        {% if massages %}
+                        {% for category,massage in massages %}
+                        {% if category== 'error' %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{ massage }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        {% endwith %}
+                        <form action="{{url_for('user.user_home')}}" method="post">
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col form-group mt-auto">
+                                    <input type="text" name="hoten" class="form-control" id="name"
+                                        placeholder="Họ và tên" required />
+                                </div>
+                                <div class="col form-group mt-auto">
+                                    <input type="text" class="form-control" name="namsinh" id="namsinh"
+                                        placeholder="Năm sinh" required />
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col form-group mt-2">
+                                    <input type="text" name="diachi" class="form-control" id="name"
+                                        placeholder="Địa Chỉ" required />
+                                </div>
+                                <div class="col form-group mt-2">
+                                    <input type="text" class="form-control" name="cmnd" id="cmnd" placeholder="CMND"
+                                        required />
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"></div>
+                                <div class="col form-group mt-2">
+                                    <input type="text" name="sdt" class="form-control" id="name"
+                                        placeholder="Số điện thoại" required />
+                                </div>
+                                <div class="col form-group mt-2">
+                                    <select name="gioitinh" id="gender" class="form-select">
+                                        <option disabled selected>Giới tính</option>
+                                        <option value="1">Nam</option>
+                                        <option value="2">Nữ</option>
+                                    </select>
+                                </div>
+                                <div class="col-1"></div>
+                            </div>
+                            <div class="row">
+                                <label for="submit">-</label>
+                                <label for="submit">ĐẶT LỊCH</label>
+                                <div class="text-center" id="submit">
+                                    <button class="btn btn-primary" type="submit"><img
+                                            src="https://img.icons8.com/external-color-line-collection-vinzence-studio/64/000000/external-hospital-user-avatar-color-line-collection-vinzence-studio.png" /></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>
+<!-- End Contact Section -->
+{% endblock %}

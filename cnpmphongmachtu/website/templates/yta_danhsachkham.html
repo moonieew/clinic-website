@@ -1,0 +1,113 @@
+{% extends "common/yta/base.html" %}
+{% block title %} Y Tá | Danh sách khám {% endblock %}
+{% block header %}
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Table</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item"><a href="#">Danh sách khám</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Default</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block contents %}
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <!-- Card header -->
+        <div class="card-header border-0">
+          <h3 class="mb-0">Danh sách khám hôm nay</h3>
+        </div>
+        <!-- Light table -->
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col" class="sort" data-sort="mads">Mã Danh Sách</th>
+                <th scope="col" class="sort" data-sort="hoten">Họ Tên</th>
+                <th scope="col" class="sort" data-sort="gioitinh">Giới Tính</th>
+                <th scope="col" class="sort" data-sort="namsinh">Năm Sinh</th>
+                <th scope="col" class="sort" data-sort="diachi">Địa Chỉ</th>
+                <th scope="col" class="sort" data-sort="cmnd">CMND</th>
+                <th scope="col" class="sort" data-sort="sdt">SĐT</th>
+                <th scope="col">Hành Động</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              {% for p in danhsach.items %}
+              <tr>
+                <td class="budget">{{p.mads}}</td>
+                <td class="budget">{{p.hoten}}</td>
+                {% if p.gioitinh == 1 %}
+                <td class="budget">Nam</td>
+                {% else %}
+                <td class="budget">Nữ</td>
+                {% endif %}
+                <td class="budget">{{p.namsinh}}</td>
+                <td class="budget">{{p.diachi}}</td>
+                <td class="budget">{{p.cmnd}}</td>
+                <td class="budget">{{p.sdt}}</td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v"></i>
+                    </a>
+                    <div class="
+                        dropdown-menu dropdown-menu-right dropdown-menu-arrow
+                      ">
+                      <a class="dropdown-item" href="{{url_for('yta.yta_xoadanhsachkham', mads = p.mads)}}"
+                        onclick="return confirm('Xoá người khám này ?')">Xoá</a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- Card footer -->
+        {% if danhsach != 0 %}
+        <div class="card-footer py-4">
+          <nav aria-label="static.">
+            <ul class="pagination justify-content-end mb-0">
+              <li class="page-item {% if not danhsach.has_prev %} disabled {% endif %}">
+                <a class="page-link" href="{{url_for('yta.yta_danhsachkham', page = danhsach.prev_num)}}">
+                  <i class="fas fa-angle-left"></i>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              {% for page_number in danhsach.iter_pages(left_edge=1,right_edge=1,left_current=2,right_current=2) %}
+              {% if page_number %}
+              <li class="page-item {% if page_number==danhsach.page %} active {% endif %}">
+                <a class="page-link" href="{{url_for('yta.yta_danhsachkham', page = page_number)}}">{{page_number}}</a>
+              </li>
+              {% endif %}
+              {% endfor %}
+              <li class="page-item {% if not danhsach.has_next %} disabled {% endif %}">
+                <a class="page-link" href="{{url_for('yta.yta_danhsachkham', page = danhsach.next_num)}}">
+                  <i class="fas fa-angle-right"></i>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <!-- Dark table -->
+</div>
+{% endblock %}

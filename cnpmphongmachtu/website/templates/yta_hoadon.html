@@ -1,0 +1,216 @@
+{% extends "common/yta/base.html" %}
+{% block title %} Y Tá | Hoá đơn {% endblock %}
+{% block header %}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Table</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Hoá đơn</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block contents %}
+<div class="container-fluid mt--6">
+    <div class="col">
+        <div class="col-xl-2 order-xl-2"></div>
+        <div class="col-12">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Phiếu khám</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="mads">Mã Phiếu Khám</th>
+                                <th scope="col" class="sort" data-sort="mads">Tên Bệnh Nhân</th>
+                                <th scope="col" class="sort" data-sort="ngaykham">Ngày Khám</th>
+                                <th scope="col" class="sort" data-sort="hoten">
+                                    Triệu Chứng
+                                </th>
+                                <th scope="col" class="sort" data-sort="gioitinh">
+                                    Loại Bệnh
+                                </th>
+                                <th scope="col" class="sort" data-sort="namsinh">Tiền khám</th>
+                                <th scope="col" class="sort" data-sort="namsinh">Tiền thuốc</th>
+                                <th scope="col">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for p in dsphieukham.items %}
+                            <tr>
+                                <td class="budget">{{p.mapk}}</td>
+                                <td class="budget">{{p.hoten}}</td>
+                                <td class="budget">{{p.ngaykham}}</td>
+                                <td class="budget">{{p.trieuchung}}</td>
+                                <td class="budget">{{p.loaibenh}}</td>
+                                <td class="budget">{{p.tienkham}}</td>
+                                <td class="budget">{{p.tienthuoc}}</td>
+                                <td class="text-right">
+                                    <a class="btn btn-danger btn-sm"
+                                        href="{{url_for('yta.yta_laphoadon',mapk = p.mapk)}}">Lập
+                                        Hoá Đơn</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                {% if dsphieukham !=0 %}
+                <div class="card-footer py-4">
+                    <nav aria-label="static.">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item {% if not dsphieukham.has_prev %} disabled {% endif %}">
+                                <a class="page-link"
+                                    href="{{url_for('yta.yta_hoadon', pageTop = dsphieukham.prev_num)}}">
+                                    <i class="fas fa-angle-left"></i>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% for page_number in
+                            dsphieukham.iter_pages(left_edge=1,right_edge=1,left_current=2,right_current=2) %}
+                            {% if page_number %}
+                            <li class="page-item {% if page_number==dsphieukham.page %} active {% endif %}">
+                                <a class="page-link"
+                                    href="{{url_for('yta.yta_hoadon', pageTop = page_number)}}">{{page_number}}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <li class="page-item {% if not dsphieukham.has_next %} disabled {% endif %}">
+                                <a class="page-link"
+                                    href="{{url_for('yta.yta_hoadon', pageTop = dsphieukham.next_num)}}">
+                                    <i class="fas fa-angle-right"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <!-- Card header -->
+                <div class="card-header border-0">
+                    <h3 class="mb-0">Hoá đơn chưa thanh toán</h3>
+                </div>
+                <!-- Light table -->
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="sort" data-sort="mads">Mã Hoá Đơn</th>
+                                <th scope="col" class="sort" data-sort="ngaykham">Ngày Bán</th>
+                                <th scope="col" class="sort" data-sort="hoten">
+                                    Tiền Khám
+                                </th>
+                                <th scope="col" class="sort" data-sort="gioitinh">
+                                    Tiền Thuốc
+                                </th>
+                                <th scope="col" class="sort" data-sort="namsinh">Tổng Thu</th>
+                                <th scope="col" class="sort" data-sort="namsinh">Trạng Thái</th>
+                                <th class="text-center" scope="col" class="sort" data-sort="namsinh">Hành Động</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for p in dshoadon.items %}
+                            <tr>
+                                <td class="budget">{{p.mahd}}</td>
+                                <td class="budget">{{p.ngayban}}</td>
+                                <td class="budget">{{p.tienkham}}</td>
+                                <td class="budget">{{p.tienthuoc}}</td>
+                                <td class="budget">{{p.tongthu}}</td>
+                                {% if p.dathanhtoan == True %}
+                                <td class="budget">Đã Thanh Toán</td>
+                                <td class="text-center">
+                                    <a class="btn btn-info btn-sm"
+                                        href="{{url_for('yta.yta_chitiethoadon',mahd = p.mahd)}}">Chi Tiết</a>
+                                </td>
+                                {% else %}
+                                <td class="budget">Chưa Thanh Toán</td>
+                                <td class=" text-center">
+                                    <a class="btn btn-success btn-sm"
+                                        href="{{url_for('yta.yta_thanhtoanhoadon',mahd = p.mahd)}}">Thanh Toán Trực
+                                        Tiếp</a>
+                                    <h6></h6>
+                                    <div id="paypal-button-container">
+                                        <!-- Include the PayPal JavaScript SDK -->
+                                        <script
+                                            src="https://www.paypal.com/sdk/js?client-id=test&currency=USD"></script>
+                                        <script>
+                                            paypal.Buttons({
+                                                createOrder: function (data, actions) {
+                                                    return actions.order.create({
+                                                        purchase_units: [{
+                                                            amount: {
+                                                                value: '{{p.tongthu/20000}}'
+                                                            }
+                                                        }]
+                                                    });
+                                                },
+                                                onApprove: function (data, actions) {
+                                                    return actions.order.capture().then(function (orderData) {
+                                                        window.location.replace(URL = "http://127.0.0.1:5000/yta/thanhtoanhoadon?mahd={{p.mahd}}");
+                                                    });
+                                                }
+                                            }).render('#paypal-button-container');
+                                        </script>
+                                    </div>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Card footer -->
+                {% if dshoadon != none %}
+                <div class="card-footer py-4">
+                    <nav aria-label="static.">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item {% if not dshoadon.has_prev %} disabled {% endif %}">
+                                <a class="page-link" href="{{url_for('yta.yta_hoadon', pageBot = dshoadon.prev_num)}}">
+                                    <i class="fas fa-angle-left"></i>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                            </li>
+                            {% for page_number in
+                            dshoadon.iter_pages(left_edge=1,right_edge=1,left_current=2,right_current=2) %}
+                            {% if page_number %}
+                            <li class="page-item {% if page_number==dshoadon.page %} active {% endif %}">
+                                <a class="page-link"
+                                    href="{{url_for('yta.yta_hoadon', pageBot = page_number)}}">{{page_number}}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            <li class="page-item {% if not dshoadon.has_next %} disabled {% endif %}">
+                                <a class="page-link" href="{{url_for('yta.yta_hoadon', pageBot = dshoadon.next_num)}}">
+                                    <i class="fas fa-angle-right"></i>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

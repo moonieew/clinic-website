@@ -1,0 +1,106 @@
+{% extends "common/bacsi/base.html" %}
+{% block title %} Bác Sĩ | Lập phiếu khám {% endblock %}
+{% block header %}
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Table</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Lập phiếu khám</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Default</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block contents %}
+<div class="row">
+    <div class="col-xl-2 order-xl-2"></div>
+    <div class="col-xl-10 order-xl-1">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h3 class="mb-0">Nhập phiếu khám bệnh bệnh nhân</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{{url_for('bacsi.bacsi_lapphieukham')}}">
+                    <h6 class="heading-small text-muted mb-4">Thông tin phiếu khám bệnh</h6>
+                    <div class="pl-lg-4">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Mã bệnh nhân</label>
+                                    <input type="text" name="mabn" value="{{ mabn }}" readonly="readonly" id="disabled"
+                                        class="form-control" placeholder="Chưa lấy được mã bệnh nhân" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Tên bệnh nhân</label>
+                                    <input type="text" name="mabn" value="{{ tenbenhnhan }}" readonly="readonly"
+                                        id="disabled" class="form-control" placeholder="Chưa lấy được mã bệnh nhân" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Ngày khám</label>
+                                    <input type="text" name="ngaykham" value="{{ ngaykham }}" readonly="readonly"
+                                        id="input-username" class="form-control" placeholder="Chưa lấy được ngày" />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-username">Triệu chứng</label>
+                                    <input type="text" name="trieuchung" id="input-username" class="form-control"
+                                        placeholder="" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-first-name">Loại bệnh</label>
+                                    <input type="text" name="loaibenh" id="input-first-name" class="form-control"
+                                        placeholder="Nhập bệnh của bệnh nhân" required />
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="input-last-name">Tiền khám</label>
+                                    <input type="number" name="tienkham" id="input-last-name" class="form-control"
+                                        readonly="readonly" min="30000" value="{{tienkham_set}}" placeholder=""
+                                        required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6"></div>
+                            <div class="col-lg-6">
+                                <div class="float-right">
+                                    <div class="form-group">
+                                        <input type="submit" name="ketoa" class="btn btn-primary" value="Kê toa">
+                                        <input type="submit" name="thanhtoan" class="btn btn-primary" value="Khám xong">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
